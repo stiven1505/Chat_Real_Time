@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container  mt-5 mb-5">
+    <h2>Sala: {{room.name}}</h2>
+    <div id="boxMessages"></div>
+    <div id="chat" class="input-group">
+        <input type="text" id="message" class="form-control">
+        <button id="btnMessage" class="btn btn-success">
+        <i class="bi bi-arrow-right"></i>
+        </button>
+    </div>
+</div>
+{% endblock %}

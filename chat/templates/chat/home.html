@@ -1,0 +1,78 @@
+{% extends "base.html" %} {% block content %}
+<div class="mt-4 ms-3 d-flex">
+  <!-- Lista de salas a la izquierda -->
+  <div class="me-4">
+    <h6>Salas</h6>
+
+    {% if error_message %}
+    <div
+      class="toast align-items-center text-bg-danger border-0"
+      id="errorToast"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      style="position: fixed; bottom: 20px; right: 20px; z-index: 1050"
+    >
+      <div class="d-flex">
+        <div class="toast-body"><strong>{{ error_message }}</strong></div>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+    {% endif %} {% for room in rooms %}
+    <div class="d-flex flex-wrap justify-content-start">
+      <a
+        class="btn btn-success mt-1"
+        style="min-width: 200px; max-width: 400px"
+        href="{% url 'home_with_room' room.id %}"
+      >
+        {{ room.name }}
+      </a>
+    </div>
+    {% empty %}
+    <p>No tienes acceso a ninguna sala.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Línea vertical divisoria -->
+  <div class="vr" style="height: 100vh; margin-left: 20px"></div>
+
+  <!-- Contenido de la sala a la derecha -->
+  <div class="ms-1 col-10">
+    {% if selected_room %}
+    <div class="container ">
+      <h2>Sala: {{ selected_room.name }}</h2>
+      <div id="boxMessages"></div>
+      <div id="chat" class="input-group">
+        <input type="text" id="message" class="form-control" />
+        <button id="btnMessage" class="btn btn-success">
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+    {% else %}
+    <p>
+      <strong>Nota:</strong> Selecciona una sala para ver el contenido del chat.
+    </p>
+    <br />
+    <p>Este proyecto es creado con Django y Bootstrap.</p>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Script para mostrar el toast -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const errorToast = document.getElementById("errorToast");
+    if (errorToast) {
+      const toast = new bootstrap.Toast(errorToast);
+      toast.show(); // Mostrar el toast
+    }
+  });
+</script>
+
+{% endblock %}
