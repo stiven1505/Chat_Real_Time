@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% load static %} {% block content %}
 <div class="mt-4 ms-3 d-flex">
   <!-- Lista de salas a la izquierda -->
   <div class="me-4">
@@ -44,11 +44,13 @@
   <!-- Contenido de la sala a la derecha -->
   <div class="ms-1 col-10">
     {% if selected_room %}
-    <div class="container ">
+    <div class="container">
       <h2>Sala: {{ selected_room.name }}</h2>
+      <h5 class="text-muted">User: {{ request.user.username }}</h5>
       <div id="boxMessages"></div>
+
       <div id="chat" class="input-group">
-        <input type="text" id="message" class="form-control" />
+        <input type="text" id="inputMessage" class="form-control" />
         <button id="btnMessage" class="btn btn-success">
           <i class="bi bi-arrow-right"></i>
         </button>
@@ -74,5 +76,11 @@
     }
   });
 </script>
+
+<script>
+  var user = "{{ request.user.username|escapejs }}"; // Escapar caracteres especiales
+
+</script>
+<script src="{% static 'js/chat.js' %}"></script>
 
 {% endblock %}
